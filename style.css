@@ -105,7 +105,7 @@ button {
 
 /* Style des BULLETS */
 
-.bullet-dotted{
+.bullet-button{
     position: absolute;
     width: 20px;
     height: 20px;
@@ -113,15 +113,72 @@ button {
     /*transition: all 0.1s;*/
 }
 
-.background-image .bullet-dotted:hover{
+.background-image .bullet-button:hover{
     cursor: pointer;
     transform: scale(1.1);
 }
 
-.bullet-dotted img{
+/* .background-image .bullet-button.active{
+    transform: scale(1.1);
+} */
+
+.bullet-button img{
     width: 100%;
 }
 
+/* --------------------------------------------------- */
+
+/* Liens des BULLETS */
+
+.bullet-link{
+    position: absolute;
+    font-size: 15px;
+    font-weight: 100;
+    letter-spacing: 5px;
+    border: 1px solid white;
+    color: #FFF;
+    text-decoration: none;
+    padding: 10px 15px;
+    transform: translateX(-50%);
+    transition: opacity 0.5s ease-in-out;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.bullet-link.active{
+    visibility: visible;
+    opacity: 1;
+}
+
+.bullet-link:hover{
+    border: 1.5px solid white;
+}
+
+.bullet-line{
+    position: absolute;
+    border-top: 1px dashed white;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.bullet-line.active{
+    opacity: 1;
+    visibility: visible;
+}
+
+#freakey-line{
+    width: 130px;
+    transform: rotate(55deg);
+}
+
+#illego-line{
+    width: 129px;
+    transform: rotate(-44deg);
+}
+
+
+/* --------------------------------------------------- */
 
 @media screen and (max-width: 768px) {
     #shop-button {
