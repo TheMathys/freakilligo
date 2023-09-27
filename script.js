@@ -49,7 +49,7 @@ function updateBackgroundPosition(transition) {
     if (scrollPosition > 0) scrollPosition = 0;
     if (scrollPosition < maxX) scrollPosition = maxX;
 
-    updateButtonsPosition();
+    updateButtonsPosition(transition);
 
     scrollLeftButton.style.visibility = "visible";
     scrollRightButton.style.visibility = "visible";
@@ -72,14 +72,18 @@ function updateBackgroundPosition(transition) {
 
 
 
-function updateButtonsPosition() {
+function updateButtonsPosition(transition) {
     freakeyButtonPosition.top = (563 / 2160) * projectedHeight - topOverflow - 10;
     freakeyButtonPosition.left = (1896 / 3840) * projectedWidth - 10;
     illegoButtonPosition.top = (1066 / 2160) * projectedHeight - topOverflow - 10;
     illegoButtonPosition.left = (644 / 3840) * projectedWidth - 10;
 
+
+    freakeyButton.style.transition = "left 0.3s ease";
     freakeyButton.style.top = `${freakeyButtonPosition.top}px`;
     freakeyButton.style.left = `${freakeyButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
+
+    illegoButton.style.transition = "left 0.3s ease";
     illegoButton.style.top = `${illegoButtonPosition.top}px`;
     illegoButton.style.left = `${illegoButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
 }
