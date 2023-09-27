@@ -47,6 +47,11 @@ body {
     justify-content: space-between;
     width: 100%;
     z-index: 1;
+    transition: ease-in-out 0.5s;
+}
+
+.scroll-buttons button.pushed {
+    transform: scale(0.9);
 }
 
 #scroll-left {
