@@ -11,13 +11,11 @@ const illegoButtonPosition = { top: 1066, left: 644 };
 let scrollPosition = 0;
 let initialX;
 let isSwiping = false;
-let imageSrcWidth;
-let imageSrcHeight;
+const imageSrcWidth = 3840;
+let imageSrcHeight = 2160;
 
 let vw100;
 let vh100;
-let bgw;
-let bgh;
 let bgscale;
 let projectedWidth;
 let projectedHeight;
@@ -26,73 +24,27 @@ let topOverflow;
 
 let maxX;
 
-
-const image = new Image();
-
 function updateOverflowValues() {
     vw100 = window.innerWidth
     vh100 = window.innerHeight
 
-        /* background image size (source) */
-
-    bgw = 3840;
-    bgh = 2160;
-
         /* projected background image size and position */
+    bgscale = Math.max(vh100 / imageSrcHeight, vw100 / imageSrcWidth)
 
-    console.log(vh100 / bgh);
-    console.log("======")
-    console.log(vw100 / bgw);
-    bgscale = Math.max(vh100 / bgh, vw100 / bgw)
+    projectedWidth  = imageSrcWidth * bgscale | 0
+    projectedHeight = imageSrcHeight * bgscale | 0
 
-    projectedWidth  = bgw * bgscale
-    projectedHeight = bgh * bgscale
-
-    leftOverflow = (projectedWidth  - vw100) / 2
-    topOverflow  = (projectedHeight - vh100) / 2
+    leftOverflow = (projectedWidth  - vw100) / 2 | 0
+    topOverflow  = (projectedHeight - vh100) / 2 | 0
     console.log(bgscale.toFixed(2), projectedWidth, projectedHeight, leftOverflow, topOverflow)
-}
-
-image.src = './img/ILLEGO-SITE-VFINAL.jpeg';
-
-image.onload = function () {
-    updateOverflowValues();
-    imageSrcWidth = this.width;
-    imageSrcHeight = this.height;
-
-    maxX = Math.round((imageSrcWidth/imageSrcHeight) * window.innerHeight - window.innerWidth)
-    if (maxX < 0) {
-        maxX = 0;
-
-    }
-    maxX = -maxX;
-
-    freakeyButtonPosition.top = 563 / 2160 * window.innerHeight - 20;
-    freakeyButtonPosition.left = 1896 / 3840 * (Math.abs(maxX) + window.innerWidth) - 20;
-    illegoButtonPosition.top = 1066 * window.innerHeight / 2860;
-    illegoButtonPosition.left = 644 * (Math.abs(maxX) + window.innerWidth) / 3840;
-    updateButtonsPosition();
-
-    scrollPosition = maxX / 2;
-
-    updateBackgroundPosition();
-    startListener();
 }
 
 window.onresize = function () {
     updateOverflowValues();
-    maxX = Math.round((imageSrcWidth/imageSrcHeight) * window.innerHeight - window.innerWidth)
-    if (maxX < 0) maxX = 0;
-    maxX = -maxX;
+    maxX = -(projectedWidth - window.innerWidth);
+    if (maxX > 0) maxX = 0;
 
 
-
-console.log(bgscale.toFixed(2), projectedWidth, projectedHeight, leftOverflow, topOverflow)
-
-    freakeyButtonPosition.top = 563 / 2160 * window.innerHeight - 20;
-    freakeyButtonPosition.left = 1896 / 3840 * (Math.abs(maxX) + window.innerWidth) - 20;
-    illegoButtonPosition.top = 1066 * window.innerHeight / 2860;
-    illegoButtonPosition.left = 644 * (Math.abs(maxX) + window.innerWidth) / 3840;
     updateButtonsPosition();
 
     updateBackgroundPosition();
@@ -126,6 +78,11 @@ function updateBackgroundPosition(transition) {
 }
 
 function updateButtonsPosition() {
+    freakeyButtonPosition.top = (563 / 2160) * projectedHeight - topOverflow - 10;
+    freakeyButtonPosition.left = (1896 / 3840) * projectedWidth - 10;
+    illegoButtonPosition.top = (1066 / 2160) * projectedHeight - topOverflow - 10;
+    illegoButtonPosition.left = (644 / 3840) * projectedWidth - 10;
+
     freakeyButton.style.top = `${freakeyButtonPosition.top}px`;
     freakeyButton.style.left = `${freakeyButtonPosition.left}px`;
     illegoButton.style.top = `${illegoButtonPosition.top}px`;
@@ -177,6 +134,19 @@ function startListener() {
     });
 }
 
+function start() {
+    updateOverflowValues();
+
+    maxX = -(projectedWidth - window.innerWidth);
+    if (maxX > 0) maxX = 0;
+
+    updateButtonsPosition();
+
+    scrollPosition = maxX / 2;
+
+    updateBackgroundPosition();
+    startListener();
+}
 
 
-
+start();
