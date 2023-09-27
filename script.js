@@ -5,8 +5,6 @@ const backgroundElements = document.querySelectorAll('.background-element');
 const scrollLeftButton = document.getElementById('scroll-left');
 const scrollRightButton = document.getElementById('scroll-right');
 
-
-
 let scrollPosition = 0;
 let initialX;
 let isSwiping = false;
@@ -35,14 +33,14 @@ function updateOverflowValues() {
     bgw = 3840;
     bgh = 2160;
 
-    bgscale = Math.max(vh100 / bgh, vw100 / bgw)
+    bgscale = Math.max(vh100 / bgh, vw100 / bgw);
 
-    projectedWidth = bgw * bgscale
-    projectedHeight = bgh * bgscale
+    projectedWidth = bgw * bgscale;
+    projectedHeight = bgh * bgscale;
 
-    leftOverflow = (projectedWidth - vw100) / 2
-    topOverflow = (projectedHeight - vh100) / 2
-    console.log(bgscale.toFixed(2), projectedWidth, projectedHeight, leftOverflow, topOverflow)
+    leftOverflow = (projectedWidth - vw100) / 2;
+    topOverflow = (projectedHeight - vh100) / 2;
+    console.log(bgscale.toFixed(2), projectedWidth, projectedHeight, leftOverflow, topOverflow);
 }
 
 function updateBGElements(){
@@ -54,8 +52,8 @@ function updateBGElements(){
         const coord = JSON.parse(element.getAttribute('data-coord'));
 
         // Appliquer des modifications sur style.top et style.left
-        element.style.top = (coord.y * backgroundRatio - topOverflow) + 'px';
-        element.style.left = (coord.x * backgroundRatio - leftOverflow) + 'px'; 
+        element.style.top = (coord.y * projectedHeight / 2160 - topOverflow) + 'px';
+        element.style.left = (coord.x * projectedWidth / 3840 - leftOverflow) + 'px'; 
     });
 }
 
@@ -68,13 +66,13 @@ image.onload = function () {
     maxX = Math.round((imageSrcWidth / imageSrcHeight) * window.innerHeight - window.innerWidth)
     if (maxX < 0) {
         maxX = 0;
-
     }
     maxX = -maxX;
 
     scrollPosition = maxX / 2;
 
     updateBackgroundPosition();
+    updateBGElements();
     startListener();
 }
 
@@ -86,6 +84,7 @@ window.onresize = function () {
     console.log(bgscale.toFixed(2), projectedWidth, projectedHeight, leftOverflow, topOverflow)
 
     updateBackgroundPosition();
+    updateBGElements();
 }
 
 function updateBackgroundPosition(transition) {
@@ -131,6 +130,7 @@ function startListener() {
 
         scrollPosition += deltaX; // Ajustez la vitesse de défilement selon vos préférences
         updateBackgroundPosition("none");
+        updateBGElements();
 
         initialX = currentX;
     });
@@ -144,6 +144,7 @@ function startListener() {
             scrollPosition -= e.deltaY * scrollSpeed;
 
             updateBackgroundPosition("none");
+            updateBGElements();
 
             // Empêchez le défilement vertical
             e.preventDefault();
@@ -153,11 +154,13 @@ function startListener() {
     scrollLeftButton.addEventListener('click', () => {
         scrollPosition += 150; // Ajustez la valeur de défilement selon vos besoins
         updateBackgroundPosition("background-position 0.3s ease");
+        updateBGElements();
     });
 
     scrollRightButton.addEventListener('click', () => {
         scrollPosition -= 150; // Ajustez la valeur de défilement selon vos besoins
         updateBackgroundPosition("background-position 0.3s ease");
+        updateBGElements();
     });
 }
 
