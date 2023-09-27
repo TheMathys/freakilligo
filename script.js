@@ -167,11 +167,17 @@ window.onload = async function () {
     }
 
     await start();
-    await new Promise(r => setTimeout(r, 2000));
+    await new Promise(r => setTimeout(r, 5000));
+    // NOTE : A MODIFIER, ICI ON ATTEND 5 SECONDES POUR BIEN VOIR LECRAN DE CHARGEMENT
 
     // Code pour cacher la page de chargement une fois que le contenu est chargé
     var loader = document.querySelector('.loader');
     loader.style.display = 'none';
 
-    document.getElementById('content').style.display = 'block';
+    freakeyButton.style.display = 'block';
+    illegoButton.style.display = 'block';
+    document.getElementById('shop-button').style.display = 'block';
+    scrollLeftButton.style.display = 'block';
+    scrollRightButton.style.display = 'block';
+
 }
