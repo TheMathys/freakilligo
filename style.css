@@ -1,3 +1,12 @@
+@keyframes float {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -74,7 +83,8 @@ button {
     padding: 15px 20px;
     left: 50%;
     transform: translateX(-50%);
-    transition: 0.3s;
+    transition: 0.3s ease-in-out;
+    animation: float 3s infinite;
 }
 
 #shop-button:hover{
@@ -84,23 +94,17 @@ button {
 
 .bullet-dotted{
     position: absolute;
+    width: 20px;
+    height: 20px;
+    z-index: 999;
     /*transition: all 0.1s;*/
 }
 
+.background-image .bullet-dotted:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
 .bullet-dotted img{
-    width: 20px;
-}
-
-#freakey-button{
-    text-decoration: none;
-    /*top: 23.3%;*/
-    top: 235px;
-    left: 933px;
-    /*left: 48.2%;*/
-}
-
-#illego-button{
-    text-decoration: none;
-    top: 48%;
-    left: 15.8%;
+    width: 100%;
 }
