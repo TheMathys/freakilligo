@@ -1,12 +1,11 @@
 
 const backgroundImage = document.querySelector('.background-image');
-const freakeyButton = document.getElementById('freakey-button');
-const illegoButton = document.getElementById('illego-button');
+const backgroundElements = document.querySelectorAll('.background-element');
+
 const scrollLeftButton = document.getElementById('scroll-left');
 const scrollRightButton = document.getElementById('scroll-right');
 
-const freakeyButtonPosition = { top: 563, left: 1896 };
-const illegoButtonPosition = { top: 1066, left: 644 };
+
 
 let scrollPosition = 0;
 let initialX;
@@ -33,45 +32,45 @@ function updateOverflowValues() {
     vw100 = window.innerWidth
     vh100 = window.innerHeight
 
-        /* background image size (source) */
-
     bgw = 3840;
     bgh = 2160;
 
-        /* projected background image size and position */
-
-    console.log(vh100 / bgh);
-    console.log("======")
-    console.log(vw100 / bgw);
     bgscale = Math.max(vh100 / bgh, vw100 / bgw)
 
-    projectedWidth  = bgw * bgscale
+    projectedWidth = bgw * bgscale
     projectedHeight = bgh * bgscale
 
-    leftOverflow = (projectedWidth  - vw100) / 2
-    topOverflow  = (projectedHeight - vh100) / 2
+    leftOverflow = (projectedWidth - vw100) / 2
+    topOverflow = (projectedHeight - vh100) / 2
     console.log(bgscale.toFixed(2), projectedWidth, projectedHeight, leftOverflow, topOverflow)
+}
+
+function updateBGElements(){
+    updateOverflowValues();
+
+    // Itérer sur chaque élément
+    backgroundElements.forEach(element => {
+        // Récupérer les coordonnées à partir de l'attribut data-coord
+        const coord = JSON.parse(element.getAttribute('data-coord'));
+
+        // Appliquer des modifications sur style.top et style.left
+        element.style.top = (coord.y * backgroundRatio - topOverflow) + 'px';
+        element.style.left = (coord.x * backgroundRatio - leftOverflow) + 'px'; 
+    });
 }
 
 image.src = './img/ILLEGO-SITE-VFINAL.jpeg';
 
 image.onload = function () {
-    updateOverflowValues();
     imageSrcWidth = this.width;
     imageSrcHeight = this.height;
 
-    maxX = Math.round((imageSrcWidth/imageSrcHeight) * window.innerHeight - window.innerWidth)
+    maxX = Math.round((imageSrcWidth / imageSrcHeight) * window.innerHeight - window.innerWidth)
     if (maxX < 0) {
         maxX = 0;
 
     }
     maxX = -maxX;
-
-    freakeyButtonPosition.top = 563 / 2160 * window.innerHeight - 20;
-    freakeyButtonPosition.left = 1896 / 3840 * (Math.abs(maxX) + window.innerWidth) - 20;
-    illegoButtonPosition.top = 1066 * window.innerHeight / 2860;
-    illegoButtonPosition.left = 644 * (Math.abs(maxX) + window.innerWidth) / 3840;
-    updateButtonsPosition();
 
     scrollPosition = maxX / 2;
 
@@ -80,20 +79,11 @@ image.onload = function () {
 }
 
 window.onresize = function () {
-    updateOverflowValues();
-    maxX = Math.round((imageSrcWidth/imageSrcHeight) * window.innerHeight - window.innerWidth)
+    maxX = Math.round((imageSrcWidth / imageSrcHeight) * window.innerHeight - window.innerWidth)
     if (maxX < 0) maxX = 0;
     maxX = -maxX;
 
-
-
-console.log(bgscale.toFixed(2), projectedWidth, projectedHeight, leftOverflow, topOverflow)
-
-    freakeyButtonPosition.top = 563 / 2160 * window.innerHeight - 20;
-    freakeyButtonPosition.left = 1896 / 3840 * (Math.abs(maxX) + window.innerWidth) - 20;
-    illegoButtonPosition.top = 1066 * window.innerHeight / 2860;
-    illegoButtonPosition.left = 644 * (Math.abs(maxX) + window.innerWidth) / 3840;
-    updateButtonsPosition();
+    console.log(bgscale.toFixed(2), projectedWidth, projectedHeight, leftOverflow, topOverflow)
 
     updateBackgroundPosition();
 }
@@ -125,12 +115,6 @@ function updateBackgroundPosition(transition) {
     backgroundImage.style.backgroundPosition = `${scrollPosition}px center`;
 }
 
-function updateButtonsPosition() {
-    freakeyButton.style.top = `${freakeyButtonPosition.top}px`;
-    freakeyButton.style.left = `${freakeyButtonPosition.left}px`;
-    illegoButton.style.top = `${illegoButtonPosition.top}px`;
-    illegoButton.style.left = `${illegoButtonPosition.left}px`;
-}
 
 function startListener() {
     backgroundImage.addEventListener('touchstart', (e) => {
