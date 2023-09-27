@@ -21,24 +21,24 @@ body {
     overflow: hidden;
 }
 
+/* -------------------------------------------------- */
+
 /* Styles pour l'image de fond */
+
 .background-image {
     background-image: url('./img/ILLEGO-SITE-VFINAL.jpeg');
     background-size: cover;
-    /* Ajuster la taille pour remplir la hauteur */
     background-position: 0px;
-    /* Centrer l'image horizontalement */
     height: 100vh;
-    /* Prend toute la hauteur de la page */
     overflow-x: hidden;
-    /* Masquer le défilement horizontal */
     position: relative;
     background-repeat: no-repeat;
-    /* Position relative pour que les boutons fonctionnent */
-    /* transition: background-position 0.3s ease; */
 }
 
+/* -------------------------------------------------- */
+
 /* Styles pour les boutons de défilement */
+
 .scroll-buttons {
     position: absolute;
     top: 50%;
@@ -59,9 +59,13 @@ body {
     border: none;
 }
 
-#scroll-left img, #scroll-right img{
+.scroll-buttons img{
     width: 26px;
 }
+
+/* -------------------------------------------------- */
+
+/* Style du bouton SHOP */
 
 button {
     background: transparent;
@@ -92,6 +96,10 @@ button {
     color: #4c290c;
 }
 
+/* --------------------------------------------------- */
+
+/* Style des BULLETS */
+
 .bullet-dotted{
     position: absolute;
     width: 20px;
@@ -107,4 +115,23 @@ button {
 
 .bullet-dotted img{
     width: 100%;
+}
+
+
+@media screen and (max-width: 768px) {
+    #shop-button {
+        bottom: 12%;
+    }
+
+    .scroll-buttons {
+        top: 85%;
+    }
+
+    #scroll-left {
+        margin-left: 15px;
+    }
+    
+    #scroll-right {
+        margin-right: 15px;
+    }
 }

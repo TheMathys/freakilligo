@@ -1,5 +1,6 @@
 
 const backgroundImage = document.querySelector('.background-image');
+// const backgroundElements = document.querySelectorAll('.background-element');
 const scrollLeftButton = document.getElementById('scroll-left');
 const scrollRightButton = document.getElementById('scroll-right');
 
@@ -26,7 +27,7 @@ function updateOverflowValues() {
     const vw100 = window.innerWidth
     const vh100 = window.innerHeight
 
-        /* projected background image size and position */
+    /* projected background image size and position */
     const bgscale = Math.max(vh100 / imageSrcHeight, vw100 / imageSrcWidth)
 
     projectedWidth  = imageSrcWidth * bgscale | 0
@@ -90,25 +91,16 @@ function updateButtonsPosition(transition) {
 }
 
 // function updateButtonsPosition() {
-//     // freakeyButtonPosition.top = (563 / 2160) * projectedHeight - topOverflow - 10;
-//     // freakeyButtonPosition.left = (1896 / 3840) * projectedWidth - 10;
-//     // illegoButtonPosition.top = (1066 / 2160) * projectedHeight - topOverflow - 10;
-//     // illegoButtonPosition.left = (644 / 3840) * projectedWidth - 10;
-//
-//     // freakeyButton.style.top = `${freakeyButtonPosition.top}px`;
-//     // freakeyButton.style.left = `${freakeyButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
-//     // illegoButton.style.top = `${illegoButtonPosition.top}px`;
-//     // illegoButton.style.left = `${illegoButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
-//
 //     backgroundElements.forEach(element => {
 //         // Récupérer les coordonnées à partir de l'attribut data-coord
 //         const coord = JSON.parse(element.getAttribute('data-coord'));
-//
+
 //         // Calculer la position de l'élément
 //         const top = (coord.y / 2160) * projectedHeight - topOverflow - 10;
 //         const left = (coord.x / 3840) * projectedWidth - 10;
-//
+
 //         // Définir la position de l'élément
+//         element.style.transition = (transition == "none" ? transition : "left 0.3s ease");
 //         element.style.top = `${top}px`;
 //         element.style.left = `${left + (maxX == 0 ? 0 : scrollPosition)}px`;
 //     });
