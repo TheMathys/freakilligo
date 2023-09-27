@@ -43,7 +43,7 @@ window.onresize = function () {
     maxX = -(projectedWidth - window.innerWidth);
     if (maxX > 0) maxX = 0;
 
-    updateBackgroundPosition();
+    updateBackgroundPosition("none");
 }
 
 function updateBackgroundPosition(transition) {
