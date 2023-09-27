@@ -7,6 +7,14 @@ const scrollRightButton = document.getElementById('scroll-right');
 
 const freakeyButtonPosition = { top: 563, left: 1896 };
 const illegoButtonPosition = { top: 1066, left: 644 };
+const bgImages = [
+    "./img/4.jpg",
+    "./img/3.jpg",
+    "./img/2.jpg",
+    "./img/1.jpg"
+];
+
+let bgValue = 0;
 
 let scrollPosition = 0;
 let initialX;
@@ -20,6 +28,34 @@ let leftOverflow;
 let topOverflow;
 
 let maxX;
+
+function preloadImages(imagePaths, callback) {
+    const loadedImages = [];
+    let loadedCount = 0;
+
+    imagePaths.forEach((path, index) => {
+        const img = new Image();
+        img.onload = () => {
+            loadedCount++;
+            if (loadedCount === imagePaths.length) {
+                // Toutes les images sont chargées
+                callback(loadedImages);
+            }
+        };
+        img.src = path;
+        loadedImages[index] = img;
+    });
+}
+
+
+function setImagesAsBackground(images) {
+
+    // Exemple : attribuer la première image préchargée à la div
+    if (images.length > 0) {
+        backgroundImage.style.backgroundImage = `url('${images[0].src}')`;
+    }
+}
+
 
 function updateOverflowValues() {
     const vw100 = window.innerWidth
@@ -129,10 +165,24 @@ function startListener() {
 
         updateBackgroundPosition("background-position 0.3s ease");
     });
+
+    freakeyButton.addEventListener("click", () => {
+        if (bgValue == 1 || bgValue == 3) bgValue -= 1;
+        else bgValue += 1;
+        backgroundImage.style.backgroundImage = `url("${bgImages[bgValue]}")`;
+    });
+
+    illegoButton.addEventListener("click", () => {
+        if (bgValue == 2 || bgValue == 3) bgValue -= 2;
+        else bgValue += 2;
+        backgroundImage.style.backgroundImage = `url("${bgImages[bgValue]}")`;
+    });
 }
 
 function start() {
     updateOverflowValues();
+
+    preloadImages(bgImages, setImagesAsBackground);
 
     maxX = -(projectedWidth - window.innerWidth);
     if (maxX > 0) maxX = 0;

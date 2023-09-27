@@ -14,7 +14,7 @@ body {
 
 /* Styles pour l'image de fond */
 .background-image {
-    background-image: url('./img/ILLEGO-SITE-VFINAL.jpeg');
+    background-image: url('./img/4.jpg');
     background-size: cover;
     /* Ajuster la taille pour remplir la hauteur */
     background-position: 0px;
@@ -26,7 +26,7 @@ body {
     position: relative;
     background-repeat: no-repeat;
     /* Position relative pour que les boutons fonctionnent */
-    /* transition: background-position 0.3s ease; */
+    /* transition: background-image 0.3s ease; */
 }
 
 /* Styles pour les boutons de défilement */
@@ -84,7 +84,12 @@ button {
 
 .bullet-dotted{
     position: absolute;
+    width: 20px;
+    height: 20px;
     /*transition: all 0.1s;*/
+    cursor: pointer;
+    background: transparent;
+    z-index: 2;
 }
 
 .bullet-dotted img{
@@ -97,6 +102,14 @@ button {
     top: 235px;
     left: 933px;
     /*left: 48.2%;*/
+}
+
+#freakey-button:hover {
+    cursor: pointer;
+}
+
+#illego-button:hover {
+    cursor: pointer;
 }
 
 #illego-button{
