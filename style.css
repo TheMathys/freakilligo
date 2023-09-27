@@ -84,6 +84,7 @@ button {
 
 .bullet-dotted{
     position: absolute;
+    transition: all 0.1s;
 }
 
 .bullet-dotted img{

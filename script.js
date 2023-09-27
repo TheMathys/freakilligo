@@ -36,18 +36,18 @@ function updateOverflowValues() {
 
     leftOverflow = (projectedWidth  - vw100) / 2 | 0
     topOverflow  = (projectedHeight - vh100) / 2 | 0
-    console.log(bgscale.toFixed(2), projectedWidth, projectedHeight, leftOverflow, topOverflow)
 }
 
-window.onresize = function () {
+window.onresize = function (event) {
+    scrollPosition = scrollPosition / projectedWidth
     updateOverflowValues();
+    scrollPosition *= projectedWidth;
     maxX = -(projectedWidth - window.innerWidth);
     if (maxX > 0) maxX = 0;
 
+    updateBackgroundPosition();
 
     updateButtonsPosition();
-
-    updateBackgroundPosition();
 }
 
 function updateBackgroundPosition(transition) {
@@ -77,16 +77,20 @@ function updateBackgroundPosition(transition) {
     backgroundImage.style.backgroundPosition = `${scrollPosition}px center`;
 }
 
-function updateButtonsPosition() {
+function computeButtonsPosition() {
     freakeyButtonPosition.top = (563 / 2160) * projectedHeight - topOverflow - 10;
     freakeyButtonPosition.left = (1896 / 3840) * projectedWidth - 10;
     illegoButtonPosition.top = (1066 / 2160) * projectedHeight - topOverflow - 10;
     illegoButtonPosition.left = (644 / 3840) * projectedWidth - 10;
+}
+
+function updateButtonsPosition() {
+    computeButtonsPosition();
 
     freakeyButton.style.top = `${freakeyButtonPosition.top}px`;
-    freakeyButton.style.left = `${freakeyButtonPosition.left}px`;
+    freakeyButton.style.left = `${freakeyButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
     illegoButton.style.top = `${illegoButtonPosition.top}px`;
-    illegoButton.style.left = `${illegoButtonPosition.left}px`;
+    illegoButton.style.left = `${illegoButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
 }
 
 function startListener() {
@@ -104,6 +108,7 @@ function startListener() {
 
         scrollPosition += deltaX; // Ajustez la vitesse de défilement selon vos préférences
         updateBackgroundPosition("none");
+        updateButtonsPosition();
 
         initialX = currentX;
     });
@@ -117,6 +122,7 @@ function startListener() {
             scrollPosition -= e.deltaY * scrollSpeed;
 
             updateBackgroundPosition("none");
+            updateButtonsPosition();
 
             // Empêchez le défilement vertical
             e.preventDefault();
@@ -125,12 +131,16 @@ function startListener() {
 
     scrollLeftButton.addEventListener('click', () => {
         scrollPosition += 150; // Ajustez la valeur de défilement selon vos besoins
+
         updateBackgroundPosition("background-position 0.3s ease");
+        updateButtonsPosition();
     });
 
     scrollRightButton.addEventListener('click', () => {
         scrollPosition -= 150; // Ajustez la valeur de défilement selon vos besoins
+
         updateBackgroundPosition("background-position 0.3s ease");
+        updateButtonsPosition();
     });
 }
 
@@ -140,13 +150,11 @@ function start() {
     maxX = -(projectedWidth - window.innerWidth);
     if (maxX > 0) maxX = 0;
 
-    updateButtonsPosition();
-
     scrollPosition = maxX / 2;
 
     updateBackgroundPosition();
+    updateButtonsPosition();
     startListener();
 }
-
 
 start();
