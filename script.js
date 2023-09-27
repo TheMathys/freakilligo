@@ -3,7 +3,8 @@ const backgroundImage = document.querySelector('.background-image');
 const scrollLeftButton = document.getElementById('scroll-left');
 const scrollRightButton = document.getElementById('scroll-right');
 
-const backgroundElements = document.querySelectorAll('.background-element');
+const freakeyButton = document.getElementById('freakey-button');
+const illegoButton = document.getElementById('illego-button');
 
 const freakeyButtonPosition = { top: 563, left: 1896 };
 const illegoButtonPosition = { top: 1066, left: 644 };
@@ -72,7 +73,6 @@ function updateBackgroundPosition(transition) {
 
 
 
-<<<<<<< HEAD
 function updateButtonsPosition(transition) {
     freakeyButtonPosition.top = (563 / 2160) * projectedHeight - topOverflow - 10;
     freakeyButtonPosition.left = (1896 / 3840) * projectedWidth - 10;
@@ -80,39 +80,39 @@ function updateButtonsPosition(transition) {
     illegoButtonPosition.left = (644 / 3840) * projectedWidth - 10;
 
 
-    freakeyButton.style.transition = "left 0.3s ease";
+    freakeyButton.style.transition = (transition == "none" ? transition : "left 0.3s ease");
     freakeyButton.style.top = `${freakeyButtonPosition.top}px`;
     freakeyButton.style.left = `${freakeyButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
 
-    illegoButton.style.transition = "left 0.3s ease";
+    illegoButton.style.transition = (transition == "none" ? transition : "left 0.3s ease");
     illegoButton.style.top = `${illegoButtonPosition.top}px`;
     illegoButton.style.left = `${illegoButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
-=======
-function updateButtonsPosition() {
-    // freakeyButtonPosition.top = (563 / 2160) * projectedHeight - topOverflow - 10;
-    // freakeyButtonPosition.left = (1896 / 3840) * projectedWidth - 10;
-    // illegoButtonPosition.top = (1066 / 2160) * projectedHeight - topOverflow - 10;
-    // illegoButtonPosition.left = (644 / 3840) * projectedWidth - 10;
-
-    // freakeyButton.style.top = `${freakeyButtonPosition.top}px`;
-    // freakeyButton.style.left = `${freakeyButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
-    // illegoButton.style.top = `${illegoButtonPosition.top}px`;
-    // illegoButton.style.left = `${illegoButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
-
-    backgroundElements.forEach(element => {
-        // Récupérer les coordonnées à partir de l'attribut data-coord
-        const coord = JSON.parse(element.getAttribute('data-coord'));
-        
-        // Calculer la position de l'élément
-        const top = (coord.y / 2160) * projectedHeight - topOverflow - 10;
-        const left = (coord.x / 3840) * projectedWidth - 10;
-
-        // Définir la position de l'élément
-        element.style.top = `${top}px`;
-        element.style.left = `${left + (maxX == 0 ? 0 : scrollPosition)}px`;
-    });
->>>>>>> 249c74a3b67cd5aae8352d443f871bdbaa8dcfee
 }
+
+// function updateButtonsPosition() {
+//     // freakeyButtonPosition.top = (563 / 2160) * projectedHeight - topOverflow - 10;
+//     // freakeyButtonPosition.left = (1896 / 3840) * projectedWidth - 10;
+//     // illegoButtonPosition.top = (1066 / 2160) * projectedHeight - topOverflow - 10;
+//     // illegoButtonPosition.left = (644 / 3840) * projectedWidth - 10;
+//
+//     // freakeyButton.style.top = `${freakeyButtonPosition.top}px`;
+//     // freakeyButton.style.left = `${freakeyButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
+//     // illegoButton.style.top = `${illegoButtonPosition.top}px`;
+//     // illegoButton.style.left = `${illegoButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
+//
+//     backgroundElements.forEach(element => {
+//         // Récupérer les coordonnées à partir de l'attribut data-coord
+//         const coord = JSON.parse(element.getAttribute('data-coord'));
+//
+//         // Calculer la position de l'élément
+//         const top = (coord.y / 2160) * projectedHeight - topOverflow - 10;
+//         const left = (coord.x / 3840) * projectedWidth - 10;
+//
+//         // Définir la position de l'élément
+//         element.style.top = `${top}px`;
+//         element.style.left = `${left + (maxX == 0 ? 0 : scrollPosition)}px`;
+//     });
+// }
 
 function startListener() {
     backgroundImage.addEventListener('touchstart', (e) => {
