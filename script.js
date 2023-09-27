@@ -152,17 +152,26 @@ function startListener() {
         updateBackgroundPosition("background-position 0.3s ease");
     });
 }
+window.onload = async function () {
 
-function start() {
-    updateOverflowValues();
+    function start() {
+        updateOverflowValues();
 
-    maxX = -(projectedWidth - window.innerWidth);
-    if (maxX > 0) maxX = 0;
+        maxX = -(projectedWidth - window.innerWidth);
+        if (maxX > 0) maxX = 0;
 
-    scrollPosition = maxX / 2;
+        scrollPosition = maxX / 2;
 
-    updateBackgroundPosition();
-    startListener();
+        updateBackgroundPosition();
+        startListener();
+    }
+
+    await start();
+    await new Promise(r => setTimeout(r, 2000));
+
+    // Code pour cacher la page de chargement une fois que le contenu est chargé
+    var loader = document.querySelector('.loader');
+    loader.style.display = 'none';
+
+    document.getElementById('content').style.display = 'block';
 }
-
-start();
