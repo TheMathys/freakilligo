@@ -14,9 +14,6 @@ let isSwiping = false;
 const imageSrcWidth = 3840;
 let imageSrcHeight = 2160;
 
-let vw100;
-let vh100;
-let bgscale;
 let projectedWidth;
 let projectedHeight;
 let leftOverflow;
@@ -25,11 +22,11 @@ let topOverflow;
 let maxX;
 
 function updateOverflowValues() {
-    vw100 = window.innerWidth
-    vh100 = window.innerHeight
+    const vw100 = window.innerWidth
+    const vh100 = window.innerHeight
 
         /* projected background image size and position */
-    bgscale = Math.max(vh100 / imageSrcHeight, vw100 / imageSrcWidth)
+    const bgscale = Math.max(vh100 / imageSrcHeight, vw100 / imageSrcWidth)
 
     projectedWidth  = imageSrcWidth * bgscale | 0
     projectedHeight = imageSrcHeight * bgscale | 0
@@ -38,7 +35,7 @@ function updateOverflowValues() {
     topOverflow  = (projectedHeight - vh100) / 2 | 0
 }
 
-window.onresize = function (event) {
+window.onresize = function () {
     scrollPosition = scrollPosition / projectedWidth
     updateOverflowValues();
     scrollPosition *= projectedWidth;
@@ -46,30 +43,26 @@ window.onresize = function (event) {
     if (maxX > 0) maxX = 0;
 
     updateBackgroundPosition();
-
-    updateButtonsPosition();
 }
 
 function updateBackgroundPosition(transition) {
     if (scrollPosition > 0) scrollPosition = 0;
     if (scrollPosition < maxX) scrollPosition = maxX;
 
+    updateButtonsPosition();
+
+    scrollLeftButton.style.visibility = "visible";
+    scrollRightButton.style.visibility = "visible";
+
     if (maxX == 0 || maxX == -0) {
         scrollLeftButton.style.visibility = "hidden";
         scrollRightButton.style.visibility = "hidden";
     } else {
-
         if (scrollPosition == 0) {
-            scrollRightButton.style.visibility = "visible";
             scrollLeftButton.style.visibility = "hidden";
         }
         else if (scrollPosition == maxX) {
-            scrollLeftButton.style.visibility = "visible";
             scrollRightButton.style.visibility = "hidden";
-        }
-        else {
-            scrollLeftButton.style.visibility = "visible";
-            scrollRightButton.style.visibility = "visible";
         }
     }
 
@@ -77,15 +70,13 @@ function updateBackgroundPosition(transition) {
     backgroundImage.style.backgroundPosition = `${scrollPosition}px center`;
 }
 
-function computeButtonsPosition() {
+
+
+function updateButtonsPosition() {
     freakeyButtonPosition.top = (563 / 2160) * projectedHeight - topOverflow - 10;
     freakeyButtonPosition.left = (1896 / 3840) * projectedWidth - 10;
     illegoButtonPosition.top = (1066 / 2160) * projectedHeight - topOverflow - 10;
     illegoButtonPosition.left = (644 / 3840) * projectedWidth - 10;
-}
-
-function updateButtonsPosition() {
-    computeButtonsPosition();
 
     freakeyButton.style.top = `${freakeyButtonPosition.top}px`;
     freakeyButton.style.left = `${freakeyButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
@@ -108,7 +99,6 @@ function startListener() {
 
         scrollPosition += deltaX; // Ajustez la vitesse de défilement selon vos préférences
         updateBackgroundPosition("none");
-        updateButtonsPosition();
 
         initialX = currentX;
     });
@@ -122,7 +112,6 @@ function startListener() {
             scrollPosition -= e.deltaY * scrollSpeed;
 
             updateBackgroundPosition("none");
-            updateButtonsPosition();
 
             // Empêchez le défilement vertical
             e.preventDefault();
@@ -133,14 +122,12 @@ function startListener() {
         scrollPosition += 150; // Ajustez la valeur de défilement selon vos besoins
 
         updateBackgroundPosition("background-position 0.3s ease");
-        updateButtonsPosition();
     });
 
     scrollRightButton.addEventListener('click', () => {
         scrollPosition -= 150; // Ajustez la valeur de défilement selon vos besoins
 
         updateBackgroundPosition("background-position 0.3s ease");
-        updateButtonsPosition();
     });
 }
 
@@ -153,7 +140,6 @@ function start() {
     scrollPosition = maxX / 2;
 
     updateBackgroundPosition();
-    updateButtonsPosition();
     startListener();
 }
 
