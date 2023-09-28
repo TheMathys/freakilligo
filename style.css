@@ -143,10 +143,10 @@ button {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    backdrop-filter: blur(5px) ;
     height: 100%;
     width: 100%;
     z-index: 10;
+    animation: blur 5s linear;
 }
 
 .loader img {
@@ -155,9 +155,25 @@ button {
     width: 25%; /* Ajustez la taille de l'image selon vos besoins */
     animation: spin 2s linear infinite;
     z-index: 15;
+    transition-property: visibility, opacity;
+    transition-duration: 1s;
 }
 
 @keyframes spin {
     0% { transform: rotate(0deg); } /* Rotation sur l'axe des X */
     100% { transform: rotate(360deg); }
+}
+
+@keyframes blur {
+    0% {
+        backdrop-filter: blur(50px);
+
+        background-color: rgba(0, 0, 0, 100%);
+    }
+
+    100% {
+        backdrop-filter: blur(0px);
+
+        background-color: rgba(0, 0, 0, 0%);
+    }
 }
