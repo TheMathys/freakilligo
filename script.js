@@ -19,6 +19,36 @@ let topOverflow;
 
 let maxX;
 
+const freakeyLine = new LeaderLine(
+    document.getElementById('freakey-button'),
+    LeaderLine.pointAnchor(document.getElementById('freakey-link'), { x: '50%', y: 0 }),
+    {
+        element: backgroundImage,
+        color: 'white',
+        size: 1, // largeur de la ligne en pixels
+        dash: {animation: true}, // rend la ligne pointillée et animée
+        startPlug: 'behind', // aucune extrémité de ligne visible au début
+        endPlug: 'behind', // aucune extrémité de ligne visible à la fin
+        path: 'straight', // la ligne est droite
+        hide: true
+    }
+);
+
+const illegoLine = new LeaderLine(
+    document.getElementById('illego-button'),
+    LeaderLine.pointAnchor(document.getElementById('illego-link'), { x: '50%', y: 0 }),
+    {
+        element: backgroundImage,
+        color: 'white',
+        size: 1,
+        dash: {animation: true},
+        startPlug: 'behind',
+        endPlug: 'behind',
+        path: 'straight',
+        hide: true
+    }
+);;
+
 // --------------------------------------------------------
 
 // GESTION DU DÉFILEMENT AVEC LES BOUTONS
@@ -32,6 +62,20 @@ function scrollLeft() {
         updateBackgroundPosition("none");
         requestAnimationFrame(scrollLeft);
     }
+}
+
+function updateLines() {
+    // Rafraîchir la position de l'ancre de fin et mettre à jour la ligne
+    freakeyLine.position();
+
+    // Rafraîchir la position de l'ancre de fin et mettre à jour la ligne
+    illegoLine.position();
+
+    document.querySelectorAll('.leader-line').forEach(element => {
+        element.style.setProperty('overflow-x', 'hidden', 'important');
+        backgroundImage.appendChild(element);
+    });
+
 }
 
 function scrollRight() {
@@ -81,6 +125,7 @@ function updateBackgroundPosition(transition) {
     if (scrollPosition < maxX) scrollPosition = maxX;
 
     updateButtonsPosition(transition);
+    updateLines();
 
     scrollLeftButton.style.visibility = "visible";
     scrollRightButton.style.visibility = "visible";
@@ -202,3 +247,48 @@ function start() {
 }
 
 start();
+
+$(document).ready(function() {
+    $('.bullet-button').click(function(e) {
+        e.stopPropagation();
+
+        var targetID = $(this).attr('target');
+        var lineID = targetID.replace('link', 'line');
+
+        if($(this).hasClass('active')) {
+            if (targetID.includes("freakey")) {
+                freakeyLine.hide();
+            } else if (targetID.includes("illego")) {
+                illegoLine.hide();
+            }
+            $(this).removeClass('active');
+            $('#' + targetID).removeClass('active');
+            $('#' + lineID).removeClass('active');
+            $(this).find('img').attr('src', './img/bullet-plain.png');
+        } else {
+            $('.bullet-button, .bullet-link, .bullet-line').removeClass('active');
+            $('.bullet-button').find('img').attr('src', './img/bullet-plain.png');
+
+            console.log(targetID);
+            if (targetID.includes("freakey")) {
+                freakeyLine.show();
+                console.log(1);
+            } else if (targetID.includes("illego")) {
+                illegoLine.show();
+                console.log(2);
+            }
+
+            $(this).addClass('active');
+            $('#' + targetID).addClass('active');
+            $('#' + lineID).addClass('active');
+            $(this).find('img').attr('src', './img/bullet-dotted.png');
+        }
+    });
+
+    $(document).click(function() {
+        $('.bullet-button, .bullet-link, .bullet-line').removeClass('active');
+        $('.bullet-button').find('img').attr('src', './img/bullet-plain.png');
+        illegoLine.hide();
+        freakeyLine.hide();
+    });
+});

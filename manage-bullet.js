@@ -27,31 +27,4 @@
 //     });
 // });
 
-$(document).ready(function() {
-    $('.bullet-button').click(function(e) {
-        e.stopPropagation();
-      
-        var targetID = $(this).attr('target');
-        var lineID = targetID.replace('link', 'line');
-      
-        if($(this).hasClass('active')) {
-            $(this).removeClass('active');
-            $('#' + targetID).removeClass('active');
-            $('#' + lineID).removeClass('active');
-            $(this).find('img').attr('src', './img/bullet-plain.png');
-        } else {
-            $('.bullet-button, .bullet-link, .bullet-line').removeClass('active');
-            $('.bullet-button').find('img').attr('src', './img/bullet-plain.png');
-          
-            $(this).addClass('active');
-            $('#' + targetID).addClass('active');
-            $('#' + lineID).addClass('active');
-            $(this).find('img').attr('src', './img/bullet-dotted.png');
-        }
-    });
 
-    $(document).click(function() {
-        $('.bullet-button, .bullet-link, .bullet-line').removeClass('active');
-        $('.bullet-button').find('img').attr('src', './img/bullet-plain.png');
-    });
-});
