@@ -9,17 +9,35 @@
 
 @keyframes growAndFade {
     0% {
-      transform: scale(0.5);
+      transform: scale(0.7);
       opacity: 1;
     }
     95% {
-      transform: scale(2.5);
+      transform: scale(3.7);
       opacity: 0;
-      border: 0.5px solid #FFF;
+      border: 0.8px solid #FFF;
     }
     100% {
       transform: scale(0.5);
       opacity: 0;
+    }
+  }
+
+@keyframes growButton {
+    0% {
+      transform: scale(1);
+    }
+    5% {
+      transform: scale(0.8);
+    }
+    10% {
+      transform: scale(1.1);
+    }
+    15% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1);
     }
   }
 
@@ -47,6 +65,7 @@ body {
     background-position: 0px;
     height: 100vh;
     overflow-x: hidden;
+    /* overflow-y: hidden; */
     position: relative;
     background-repeat: no-repeat;
 }
@@ -126,6 +145,7 @@ button {
     width: 20px;
     height: 20px;
     z-index: 999;
+    animation: growButton 5s infinite;
     /*transition: all 0.1s;*/
 }
 
@@ -142,17 +162,19 @@ button {
     border-radius: 50%;
     border: 1px solid #FFF;
     background-color: transparent; /* Remplacez par la couleur de votre choix */
-    animation: growAndFade 4s infinite;
+    animation: growAndFade 5s infinite;
   }
 
 .background-image .bullet-button:hover{
+    animation: hidden;
     cursor: pointer;
     transform: scale(1.1);
 }
 
-/* .background-image .bullet-button.active{
+.background-image .bullet-button.active{
+    animation: hidden;
     transform: scale(1.1);
-} */
+}
 
 .bullet-button img{
     width: 100%;
