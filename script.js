@@ -20,7 +20,7 @@ let topOverflow;
 let maxX;
 
 const freakeyLine = new LeaderLine(
-    document.getElementById('freakey-button'),
+    LeaderLine.pointAnchor(document.getElementById('freakey-button'), { x: '75%', y: '100%' }),
     LeaderLine.pointAnchor(document.getElementById('freakey-link'), { x: '50%', y: 0 }),
     {
         element: backgroundImage,
@@ -35,8 +35,8 @@ const freakeyLine = new LeaderLine(
 );
 
 const illegoLine = new LeaderLine(
-    document.getElementById('illego-button'),
-    LeaderLine.pointAnchor(document.getElementById('illego-link'), { x: '50%', y: 0 }),
+    LeaderLine.pointAnchor(document.getElementById('illego-button'), { x: '75%', y: '25%' }),
+    LeaderLine.pointAnchor(document.getElementById('illego-link'), { x: 0, y: '50%' }),
     {
         element: backgroundImage,
         color: 'white',
@@ -104,6 +104,7 @@ function stopScrolling() {
     scrollLeftButton.classList.remove('pushed');
     scrollRightButton.classList.remove('pushed');
 }
+
 // --------------------------------------------------------
 
 function updateOverflowValues() {
@@ -271,10 +272,12 @@ $(document).ready(function() {
 
             console.log(targetID);
             if (targetID.includes("freakey")) {
-                freakeyLine.show();
+                freakeyLine.show("draw", {duration: 500, timing: 'linear'});
+                illegoLine.hide();
                 console.log(1);
             } else if (targetID.includes("illego")) {
-                illegoLine.show();
+                illegoLine.show("draw", {duration: 500, timing: 'linear'});
+                freakeyLine.hide();
                 console.log(2);
             }
 

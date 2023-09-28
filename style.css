@@ -7,11 +7,56 @@
     }
 }
 
+@keyframes growAndFade {
+    0% {
+      transform: scale(0.7);
+      opacity: 1;
+    }
+    95% {
+      transform: scale(3.7);
+      opacity: 0;
+      border: 0.8px solid #FFF;
+    }
+    100% {
+      transform: scale(0.5);
+      opacity: 0;
+    }
+  }
+
+@keyframes growButton {
+    0% {
+      transform: scale(1);
+    }
+    5% {
+      transform: scale(0.8);
+    }
+    10% {
+      transform: scale(1.1);
+    }
+    15% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes bulletLink{
+    0% {
+        opacity: 0;
+    }
+    30% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    overflow: hidden !important;
 }
 
 body {
@@ -19,7 +64,7 @@ body {
     padding: 0;
     font-family: 'Montserrat', sans-serif;
     background-color: #4c290c;
-    overflow: hidden!important;
+    overflow: hidden;
 }
 
 /* -------------------------------------------------- */
@@ -111,21 +156,46 @@ button {
     width: 20px;
     height: 20px;
     z-index: 999;
-    /*transition: all 0.1s;*/
+    animation: growButton 5s infinite;
 }
 
+.drop-anim{
+    position: absolute;
+    overflow: visible;
+}
+
+.drop-anim::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #FFF;
+    background-color: transparent; /* Remplacez par la couleur de votre choix */
+    animation: growAndFade 5s infinite;
+  }
+
 .background-image .bullet-button:hover{
+    animation: hidden;
     cursor: pointer;
     transform: scale(1.1);
 }
 
-/* .background-image .bullet-button.active{
+.background-image .bullet-button.active{
+    animation: hidden;
     transform: scale(1.1);
-} */
+}
 
 .bullet-button img{
     width: 100%;
 }
+
+.bullet-button img{
+    width: 100%;
+}
+
+
 
 /* --------------------------------------------------- */
 
@@ -148,6 +218,7 @@ button {
 
 .bullet-link.active{
     visibility: visible;
+    animation: bulletLink 1s ease-in;
     opacity: 1;
 }
 
@@ -197,8 +268,4 @@ button {
     #scroll-right {
         margin-right: 15px;
     }
-}
-
-.leader-line {
-    overflow: hidden!important;
 }
