@@ -1,7 +1,10 @@
 @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateX(-50%) translateY(0);
     }
+
     50% {
         transform: translateX(-50%) translateY(-10px);
     }
@@ -9,45 +12,62 @@
 
 @keyframes growAndFade {
     0% {
-      transform: scale(0.7);
-      opacity: 1;
+        width: 14px;
+        height: 14px;
+        top: 3px;
+        left: 3px;
+        opacity: 1;
     }
+
     95% {
-      transform: scale(3.7);
-      opacity: 0;
-      border: 0.8px solid #FFF;
+        width: 74px;
+        height: 74px;
+        top: -27px;
+        left: -27px;
+        opacity: 0;
     }
+
     100% {
-      transform: scale(0.5);
-      opacity: 0;
+        width: 10px;
+        height: 10px;
+        top: 5px;
+        left: 5px;
+        opacity: 0;
     }
-  }
+}
+
 
 @keyframes growButton {
     0% {
-      transform: scale(1);
+        transform: scale(1);
     }
-    5% {
-      transform: scale(0.8);
-    }
-    10% {
-      transform: scale(1.1);
-    }
-    15% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
 
-  @keyframes bulletLink{
+    5% {
+        transform: scale(0.8);
+    }
+
+    10% {
+        transform: scale(1.1);
+    }
+
+    15% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes bulletLink {
     0% {
         opacity: 0;
     }
+
     30% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -110,7 +130,7 @@ body {
     border: none;
 }
 
-.scroll-buttons img{
+.scroll-buttons img {
     width: 26px;
 }
 
@@ -126,7 +146,7 @@ button {
     color: white;
 }
 
-#shop-button{
+#shop-button {
     position: absolute;
     font-size: 20px;
     font-weight: 500;
@@ -142,7 +162,7 @@ button {
     animation: float 3s infinite;
 }
 
-#shop-button:hover{
+#shop-button:hover {
     background-color: #FFF;
     color: #4c290c;
 }
@@ -151,7 +171,7 @@ button {
 
 /* Style des BULLETS */
 
-.bullet-button{
+.bullet-button {
     position: absolute;
     width: 20px;
     height: 20px;
@@ -159,7 +179,7 @@ button {
     animation: growButton 5s infinite;
 }
 
-.drop-anim{
+.drop-anim {
     position: absolute;
     overflow: visible;
 }
@@ -172,26 +192,28 @@ button {
     height: 20px;
     border-radius: 50%;
     border: 1px solid #FFF;
-    background-color: transparent; /* Remplacez par la couleur de votre choix */
+    background-color: transparent;
+    top: 0;
+    left: 0;
     animation: growAndFade 5s infinite;
-  }
+}
 
-.background-image .bullet-button:hover{
+.background-image .bullet-button:hover {
     animation: hidden;
     cursor: pointer;
     transform: scale(1.1);
 }
 
-.background-image .bullet-button.active{
+.background-image .bullet-button.active {
     animation: hidden;
     transform: scale(1.1);
 }
 
-.bullet-button img{
+.bullet-button img {
     width: 100%;
 }
 
-.bullet-button img{
+.bullet-button img {
     width: 100%;
 }
 
@@ -201,7 +223,7 @@ button {
 
 /* Liens des BULLETS */
 
-.bullet-link{
+.bullet-link {
     position: absolute;
     font-size: 15px;
     font-weight: 100;
@@ -216,17 +238,17 @@ button {
     opacity: 0;
 }
 
-.bullet-link.active{
+.bullet-link.active {
     visibility: visible;
     animation: bulletLink 1s ease-in;
     opacity: 1;
 }
 
-.bullet-link:hover{
+.bullet-link:hover {
     border: 1.5px solid white;
 }
 
-.bullet-line{
+.bullet-line {
     position: absolute;
     border-top: 1px dashed white;
     transition: opacity 0.5s ease-in-out;
@@ -234,17 +256,17 @@ button {
     visibility: hidden;
 }
 
-.bullet-line.active{
+.bullet-line.active {
     opacity: 1;
     visibility: visible;
 }
 
-#freakey-line{
+#freakey-line {
     width: 130px;
     transform: rotate(55deg);
 }
 
-#illego-line{
+#illego-line {
     width: 129px;
     transform: rotate(-44deg);
 }
