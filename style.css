@@ -291,3 +291,39 @@ button {
         margin-right: 15px;
     }
 }
+
+/* --------------------------------------------------- */
+
+/* LOADER */
+
+.loader {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 1);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader h1{
+    color: #FFF;
+    letter-spacing: 10px;
+    font-weight: 200;
+    text-transform: uppercase;
+}
+
+.loader.fondu-out {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+.loader-img{
+    width: 20%;
+}
+
+.loader-img.fondu-out{
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
