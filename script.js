@@ -1,20 +1,10 @@
 
+// DÉCLARATION DES VARIABLES
+
 const backgroundImage = document.querySelector('.background-image');
-const freakeyButton = document.getElementById('freakey-button');
-const illegoButton = document.getElementById('illego-button');
+const backgroundElements = document.querySelectorAll('.background-element');
 const scrollLeftButton = document.getElementById('scroll-left');
 const scrollRightButton = document.getElementById('scroll-right');
-
-const freakeyButtonPosition = { top: 563, left: 1896 };
-const illegoButtonPosition = { top: 1066, left: 644 };
-const bgImages = [
-    "./img/4.jpg",
-    "./img/3.jpg",
-    "./img/2.jpg",
-    "./img/1.jpg"
-];
-
-let bgValue = 0;
 
 let scrollPosition = 0;
 let initialX;
@@ -29,63 +19,68 @@ let topOverflow;
 
 let maxX;
 
-function preloadImages(imagePaths, callback) {
-    const loadedImages = [];
-    let loadedCount = 0;
+// --------------------------------------------------------
 
-    imagePaths.forEach((path, index) => {
-        const img = new Image();
-        img.onload = () => {
-            loadedCount++;
-            if (loadedCount === imagePaths.length) {
-                // Toutes les images sont chargées
-                callback(loadedImages);
-            }
-        };
-        img.src = path;
-        loadedImages[index] = img;
-    });
-}
+// GESTION DU DÉFILEMENT AVEC LES BOUTONS
 
+let isScrollingLeft = false;
+let isScrollingRight = false;
 
-function setImagesAsBackground(images) {
-
-    // Exemple : attribuer la première image préchargée à la div
-    if (images.length > 0) {
-        backgroundImage.style.backgroundImage = `url('${images[0].src}')`;
+function scrollLeft() {
+    if (isScrollingLeft) {
+        scrollPosition += 5; // Ajustez la vitesse de défilement selon vos besoins
+        updateBackgroundPosition("none");
+        requestAnimationFrame(scrollLeft);
     }
 }
 
+function scrollRight() {
+    if (isScrollingRight) {
+        scrollPosition -= 5; // Ajustez la vitesse de défilement selon vos besoins
+        updateBackgroundPosition("none");
+        requestAnimationFrame(scrollRight);
+    }
+}
+
+function startScrolling(direction) {
+    if (direction === 'left') {
+        isScrollingLeft = true;
+        scrollLeftButton.classList.add('pushed');
+        requestAnimationFrame(scrollLeft);
+    } else {
+        isScrollingRight = true;
+        scrollRightButton.classList.add('pushed');
+        requestAnimationFrame(scrollRight);
+    }
+}
+
+function stopScrolling() {
+    isScrollingLeft = false;
+    isScrollingRight = false;
+    scrollLeftButton.classList.remove('pushed');
+    scrollRightButton.classList.remove('pushed');
+}
+// --------------------------------------------------------
 
 function updateOverflowValues() {
     const vw100 = window.innerWidth
     const vh100 = window.innerHeight
 
-        /* projected background image size and position */
+    /* projected background image size and position */
     const bgscale = Math.max(vh100 / imageSrcHeight, vw100 / imageSrcWidth)
 
-    projectedWidth  = imageSrcWidth * bgscale | 0
+    projectedWidth = imageSrcWidth * bgscale | 0
     projectedHeight = imageSrcHeight * bgscale | 0
 
-    leftOverflow = (projectedWidth  - vw100) / 2 | 0
-    topOverflow  = (projectedHeight - vh100) / 2 | 0
-}
-
-window.onresize = function () {
-    scrollPosition = scrollPosition / projectedWidth
-    updateOverflowValues();
-    scrollPosition *= projectedWidth;
-    maxX = -(projectedWidth - window.innerWidth);
-    if (maxX > 0) maxX = 0;
-
-    updateBackgroundPosition();
+    leftOverflow = (projectedWidth - vw100) / 2 | 0
+    topOverflow = (projectedHeight - vh100) / 2 | 0
 }
 
 function updateBackgroundPosition(transition) {
     if (scrollPosition > 0) scrollPosition = 0;
     if (scrollPosition < maxX) scrollPosition = maxX;
 
-    updateButtonsPosition();
+    updateButtonsPosition(transition);
 
     scrollLeftButton.style.visibility = "visible";
     scrollRightButton.style.visibility = "visible";
@@ -106,19 +101,34 @@ function updateBackgroundPosition(transition) {
     backgroundImage.style.backgroundPosition = `${scrollPosition}px center`;
 }
 
-
-
 function updateButtonsPosition() {
-    freakeyButtonPosition.top = (563 / 2160) * projectedHeight - topOverflow - 10;
-    freakeyButtonPosition.left = (1896 / 3840) * projectedWidth - 10;
-    illegoButtonPosition.top = (1066 / 2160) * projectedHeight - topOverflow - 10;
-    illegoButtonPosition.left = (644 / 3840) * projectedWidth - 10;
+    backgroundElements.forEach(element => {
+        // Récupérer les coordonnées à partir de l'attribut data-coord
+        const coord = JSON.parse(element.getAttribute('data-coord'));
 
-    freakeyButton.style.top = `${freakeyButtonPosition.top}px`;
-    freakeyButton.style.left = `${freakeyButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
-    illegoButton.style.top = `${illegoButtonPosition.top}px`;
-    illegoButton.style.left = `${illegoButtonPosition.left + (maxX == 0 ? 0 : scrollPosition)}px`;
+        // Calculer la position de l'élément
+        const top = (coord.y / 2160) * projectedHeight - topOverflow - 10;
+        const left = (coord.x / 3840) * projectedWidth - 10;
+
+        // Définir la position de l'élément
+        element.style.top = `${top}px`;
+        element.style.left = `${left + (maxX == 0 ? 0 : scrollPosition)}px`;
+    });
 }
+
+window.onresize = function () {
+    scrollPosition = scrollPosition / projectedWidth
+    updateOverflowValues();
+    scrollPosition *= projectedWidth;
+    maxX = -(projectedWidth - window.innerWidth);
+    if (maxX > 0) maxX = 0;
+
+    updateBackgroundPosition("none");
+}
+
+// --------------------------------------------------------
+
+// ÉCOUTEURS D'ÉVENEMENTS POUR LE DÉFILEMENT
 
 function startListener() {
     backgroundImage.addEventListener('touchstart', (e) => {
@@ -154,35 +164,33 @@ function startListener() {
         }
     }, { passive: false });
 
-    scrollLeftButton.addEventListener('click', () => {
-        scrollPosition += 150; // Ajustez la valeur de défilement selon vos besoins
+    // --------------------------------------------------------
 
-        updateBackgroundPosition("background-position 0.3s ease");
-    });
+    // ÉCOUTEURS D'ÉVENEMENTS POUR LES BOUTONS SCROLL
 
-    scrollRightButton.addEventListener('click', () => {
-        scrollPosition -= 150; // Ajustez la valeur de défilement selon vos besoins
+    // Appliquer les écouteurs d'événements pour les deux boutons
+    for (const [direction, button] of [['left', scrollLeftButton], ['right', scrollRightButton]]) {
+        button.addEventListener('mousedown', () => startScrolling(direction));
+        button.addEventListener('mouseup', stopScrolling);
+        button.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            startScrolling(direction);
+        });
+        button.addEventListener('touchend', stopScrolling);
+    }
 
-        updateBackgroundPosition("background-position 0.3s ease");
-    });
+    // Appliquer les écouteurs d'événements pour le document
+    document.addEventListener('mouseup', stopScrolling);
+    document.addEventListener('touchend', stopScrolling);
 
-    freakeyButton.addEventListener("click", () => {
-        if (bgValue == 1 || bgValue == 3) bgValue -= 1;
-        else bgValue += 1;
-        backgroundImage.style.backgroundImage = `url("${bgImages[bgValue]}")`;
-    });
-
-    illegoButton.addEventListener("click", () => {
-        if (bgValue == 2 || bgValue == 3) bgValue -= 2;
-        else bgValue += 2;
-        backgroundImage.style.backgroundImage = `url("${bgImages[bgValue]}")`;
-    });
 }
+
+// --------------------------------------------------------
+
+// INITIALISATION
 
 function start() {
     updateOverflowValues();
-
-    preloadImages(bgImages, setImagesAsBackground);
 
     maxX = -(projectedWidth - window.innerWidth);
     if (maxX > 0) maxX = 0;
