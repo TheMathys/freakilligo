@@ -333,3 +333,50 @@ button {
         width: 60%;
     }
 }
+
+/* --------------------------------------------------- */
+
+/* Test pour les effets de lumières */
+
+.light-effect{
+    position: absolute;
+    z-index: 1001;
+}
+
+#canva1{
+    /* background-color: red; */
+    width: 170px;
+    height: 15px;
+    border-radius: 50%;
+    transform: rotate(-26deg);
+}
+
+#illego1{
+    /* background-color: #FFF; */
+    width: 10px;
+    height: 250px;
+    border-radius: 50%;
+}
+
+#illego2{
+    /* background-color: #FFF; */
+    width: 160px;
+    height: 10px;
+    transform: rotate(11deg);
+    border-radius: 50%;
+}
+
+#illego3{
+    /* background-color: #FFF; */
+    width: 10px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+#illego4{
+    /* background-color: #FFF; */
+    width: 160px;
+    height: 10px;
+    transform: rotate(-10deg);
+    border-radius: 50%;
+}

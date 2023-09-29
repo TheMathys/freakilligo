@@ -17,6 +17,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="./leader-line.min.js"></script>
     <script src="./script.js" defer></script>
+    <script src="./light-effect.js" defer></script>
     <title>ILLEGO - SHOP</title>
 </head>
 
@@ -24,10 +25,9 @@
 
     <!-- LOADER -->
 
-    <div class="loader">
+    <!-- <div class="loader">
         <img class="loader-img" src="./img/loading.gif" alt="">
-        <!-- <h1>Loading...</h1> -->
-    </div>
+    </div> -->
 
     <!-- ----------------------------------------------------- -->
 
@@ -49,6 +49,14 @@
         <div class="drop-anim background-element" data-coord='{"x": 641, "y": 1069}'></div>
 
         <a id="shop-button" href="https://illego-store.myshopify.com/products/avant-garde-vol1-illego-pack">SHOP</a>
+
+        <!-- Test effet de lumière -->
+        <canvas id="canva1" class="light-effect background-element" data-color="rgba(255, 255, 255, 0.8)" data-coord='{"x": 3200, "y": 340}'></canvas>
+        <canvas id="illego1" class="light-effect background-element" data-color="rgba(255, 255, 255, 0.8)" data-coord='{"x": 50, "y": 770}'></canvas>
+        <canvas id="illego2" class="light-effect background-element" data-color="rgba(255, 255, 255, 0.8)" data-coord='{"x": 50, "y": 790}'></canvas>
+        <canvas id="illego3" class="light-effect background-element" data-color="rgba(255, 255, 255, 0.8)" data-coord='{"x": 440, "y": 830}'></canvas>
+        <canvas id="illego4" class="light-effect background-element" data-color="rgba(255, 255, 255, 0.8)" data-coord='{"x": 50, "y": 1380}'></canvas>
+
     </div>
 
     <div class="scroll-buttons">
