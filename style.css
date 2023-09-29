@@ -320,10 +320,16 @@ button {
 }
 
 .loader-img{
-    width: 20%;
+    width: 30%;
 }
 
 .loader-img.fondu-out{
     opacity: 0;
     transition: opacity 0.3s ease-out;
+}
+
+@media screen and (max-width: 768px) {
+    .loader-img{
+        width: 60%;
+    }
 }
