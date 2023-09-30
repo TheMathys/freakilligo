@@ -198,7 +198,7 @@ button {
     animation: growAndFade 5s infinite;
 }
 
-.background-image .bullet-button:hover {
+/* .background-image .bullet-button:hover {
     animation: hidden;
     cursor: pointer;
     transform: scale(1.1);
@@ -207,7 +207,7 @@ button {
 .background-image .bullet-button.active {
     animation: hidden;
     transform: scale(1.1);
-}
+} */
 
 .bullet-button img {
     width: 100%;
@@ -276,11 +276,11 @@ button {
 
 @media screen and (max-width: 768px) {
     #shop-button {
-        bottom: 12%;
+        bottom: 15%;
     }
 
     .scroll-buttons {
-        top: 85%;
+        top: 80%;
     }
 
     #scroll-left {
@@ -289,5 +289,100 @@ button {
 
     #scroll-right {
         margin-right: 15px;
+    }
+}
+
+/* --------------------------------------------------- */
+
+/* LOADER */
+
+.loader {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 1);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader h1{
+    color: #FFF;
+    letter-spacing: 10px;
+    font-weight: 200;
+    text-transform: uppercase;
+}
+
+.loader.fondu-out {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+.loader-img{
+    width: 30%;
+}
+
+.loader-img.fondu-out{
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+@media screen and (max-width: 768px) {
+    .loader-img{
+        width: 60%;
+    }
+}
+
+/* --------------------------------------------------- */
+
+/* Test pour les effets de lumières */
+
+.light-effect{
+    position: absolute;
+    z-index: 1001;
+}
+
+#canva1{
+    /* background-color: red; */
+    width: 170px;
+    height: 15px;
+    border-radius: 50%;
+    transform: rotate(-26deg);
+}
+
+#illego1{
+    /* background-color: #FFF; */
+    width: 10px;
+    height: 250px;
+    border-radius: 50%;
+}
+
+#illego2{
+    /* background-color: #FFF; */
+    width: 160px;
+    height: 10px;
+    transform: rotate(11deg);
+    border-radius: 50%;
+}
+
+#illego3{
+    /* background-color: #FFF; */
+    width: 10px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+#illego4{
+    /* background-color: #FFF; */
+    width: 160px;
+    height: 10px;
+    transform: rotate(-10deg);
+    border-radius: 50%;
+}
+
+@media screen and (max-width: 768px){
+    .light-effect{
+        display: none;
     }
 }
