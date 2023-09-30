@@ -19,6 +19,8 @@ let topOverflow;
 
 let maxX;
 
+
+
 const freakeyLine = new LeaderLine(
     LeaderLine.pointAnchor(document.getElementById('freakey-button'), { x: '75%', y: '100%' }),
     LeaderLine.pointAnchor(document.getElementById('freakey-link'), { x: '50%', y: 0 }),
@@ -59,7 +61,7 @@ let isScrollingRight = false;
 function scrollLeft() {
     if (isScrollingLeft) {
         scrollPosition += 5; // Ajustez la vitesse de défilement selon vos besoins
-        updateBackgroundPosition("none");
+        updateBackgroundPosition();
         requestAnimationFrame(scrollLeft);
     }
 }
@@ -73,7 +75,6 @@ function updateLines() {
 
     document.querySelectorAll('.leader-line').forEach(element => {
         element.style.setProperty('overflow-x', 'hidden', 'important');
-        backgroundImage.appendChild(element);
     });
 
 }
@@ -81,7 +82,7 @@ function updateLines() {
 function scrollRight() {
     if (isScrollingRight) {
         scrollPosition -= 5; // Ajustez la vitesse de défilement selon vos besoins
-        updateBackgroundPosition("none");
+        updateBackgroundPosition();
         requestAnimationFrame(scrollRight);
     }
 }
@@ -119,13 +120,20 @@ function updateOverflowValues() {
 
     leftOverflow = (projectedWidth - vw100) / 2 | 0
     topOverflow = (projectedHeight - vh100) / 2 | 0
+
 }
 
-function updateBackgroundPosition(transition) {
+function updateBackgroundPosition() {
+    scrollPosition = scrollPosition / projectedWidth
+    updateOverflowValues();
+    scrollPosition *= projectedWidth;
+    maxX = -(projectedWidth - window.innerWidth);
+    if (maxX > 0) maxX = 0;
+
     if (scrollPosition > 0) scrollPosition = 0;
     if (scrollPosition < maxX) scrollPosition = maxX;
 
-    updateButtonsPosition(transition);
+    updateButtonsPosition();
     updateLines();
 
     scrollLeftButton.style.visibility = "visible";
@@ -143,7 +151,6 @@ function updateBackgroundPosition(transition) {
         }
     }
 
-    backgroundImage.style.transition = transition;
     backgroundImage.style.backgroundPosition = `${scrollPosition}px center`;
 }
 
@@ -169,7 +176,8 @@ window.onresize = function () {
     maxX = -(projectedWidth - window.innerWidth);
     if (maxX > 0) maxX = 0;
 
-    updateBackgroundPosition("none");
+
+    updateBackgroundPosition();
 }
 
 // --------------------------------------------------------
@@ -190,7 +198,7 @@ function startListener() {
         const deltaX = currentX - initialX;
 
         scrollPosition += deltaX; // Ajustez la vitesse de défilement selon vos préférences
-        updateBackgroundPosition("none");
+        updateBackgroundPosition();
 
         initialX = currentX;
     });
@@ -203,7 +211,7 @@ function startListener() {
             // Ajustez la vitesse de défilement
             scrollPosition -= e.deltaY * scrollSpeed;
 
-            updateBackgroundPosition("none");
+            updateBackgroundPosition();
 
             // Empêchez le défilement vertical
             e.preventDefault();
@@ -236,12 +244,16 @@ function startListener() {
 // INITIALISATION
 
 function start() {
+    document.querySelectorAll('.leader-line').forEach(element => {
+       backgroundImage.appendChild(element);
+    });
     updateOverflowValues();
 
     maxX = -(projectedWidth - window.innerWidth);
     if (maxX > 0) maxX = 0;
 
     scrollPosition = maxX / 2;
+   // alert(scrollPosition);
 
     updateBackgroundPosition();
     startListener();
