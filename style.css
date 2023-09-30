@@ -198,7 +198,7 @@ button {
     animation: growAndFade 5s infinite;
 }
 
-.background-image .bullet-button:hover {
+/* .background-image .bullet-button:hover {
     animation: hidden;
     cursor: pointer;
     transform: scale(1.1);
@@ -207,7 +207,7 @@ button {
 .background-image .bullet-button.active {
     animation: hidden;
     transform: scale(1.1);
-}
+} */
 
 .bullet-button img {
     width: 100%;
@@ -276,11 +276,11 @@ button {
 
 @media screen and (max-width: 768px) {
     #shop-button {
-        bottom: 12%;
+        bottom: 15%;
     }
 
     .scroll-buttons {
-        top: 85%;
+        top: 80%;
     }
 
     #scroll-left {
@@ -379,4 +379,10 @@ button {
     height: 10px;
     transform: rotate(-10deg);
     border-radius: 50%;
+}
+
+@media screen and (max-width: 768px){
+    .light-effect{
+        display: none;
+    }
 }
